@@ -5,30 +5,39 @@ using UnityEngine.UI;
 using TMPro;
 public class Health : MonoBehaviour
 {
-    private float healthPoints = 100f;
-    private bool isDead = false;
+    private float maxHealth = 100f;
+    private float currentHealth;
+    
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text GameOverText;
+    [SerializeField] private float damageOnHit = 10f;
 
+    private bool isDead = false;
     void Start()
     {
-        healthBar.maxValue = healthPoints;
-        healthBar.value = healthPoints;
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = currentHealth;
         GameOverText.gameObject.SetActive(false);
     }
 
-    void Update()
+   void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
         }
     }
+
     public void TakeDamage(float damage)
     {
-        healthPoints = Mathf.Max(healthPoints - damage, 0);
-        healthBar.value = healthPoints;
-        if (healthPoints == 0)
+        if (isDead) return;
+
+        currentHealth = Mathf.Max(currentHealth - damage, 0);
+        healthBar.value = currentHealth;
+
+        Debug.Log($"Took {damage} damage. Health now: {currentHealth}");
+        if (currentHealth <= 0)
         {
             Die();
         }

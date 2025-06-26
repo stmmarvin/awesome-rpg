@@ -6,16 +6,16 @@ public class Progression : MonoBehaviour
 {
     [SerializeField] private ProgressionCharacterClass[] characterClasses;
     Dictionary<CharacterClass, Dictionary<Stats, float[]>> lookupTable = null;
-    
+
     [System.Serializable]
-     class ProgressionCharacterClass 
+    class ProgressionCharacterClass
     {
         public CharacterClass characterClass;
         public ProgressionStat[] stats;
     }
 
     [System.Serializable]
-     class ProgressionStat
+    class ProgressionStat
     {
         public Stats stat;
         public float[] levels;
@@ -27,9 +27,9 @@ public class Progression : MonoBehaviour
         {
             if (progressionClass.characterClass == characterClass)
             {
-                foreach(ProgressionStat progressionStat in progressionClass.stats)
+                foreach (ProgressionStat progressionStat in progressionClass.stats)
                 {
-                    if(progressionStat.stat != stat) continue;
+                    if (progressionStat.stat != stat) continue;
 
                     return progressionStat.levels[level - 1];
                 }
@@ -54,25 +54,5 @@ public class Progression : MonoBehaviour
             lookupTable[progressionClass.characterClass] = statLookup;
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
-// Define CharacterClass enum
-public enum CharacterClass
-{
-    Warrior,
-    Mage,
-    Archer
-    // Add other character classes here
-}
